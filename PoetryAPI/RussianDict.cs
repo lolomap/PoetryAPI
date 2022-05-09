@@ -88,6 +88,7 @@ namespace PoetryAPI
 						double freq = -1;
 						while ((line = sr.ReadLine()) != null)
 						{
+							Console.WriteLine("!!!!!!!!\n" + line + "\n!!!!!!!!!!!\n");
 							if (line.Contains("git"))
 								continue;
 
