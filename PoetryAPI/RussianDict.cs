@@ -88,8 +88,7 @@ namespace PoetryAPI
 						double freq = -1;
 						while ((line = sr.ReadLine()) != null)
 						{
-							Console.WriteLine(words.Count);
-							if (line.Contains("\ufeff"))
+							if (line.Contains("git"))
 								continue;
 
 							if (line == "" || line == " ")
@@ -122,8 +121,6 @@ namespace PoetryAPI
 								word.Lemm = lemm;
 								word.Frequency = freq;
 							}
-							Console.WriteLine("125");
-							Console.WriteLine("[" + parts[0] + "]");
 							switch (parts[1].Trim().Split(' ')[0])
 							{
 								case "гл":
@@ -143,10 +140,8 @@ namespace PoetryAPI
 									word.speechPart = SpeechPart.Unknown;
 									break;
 							}
-							Console.WriteLine("[1]");
 							string stressed_text = "";
 							string stressed_orig = parts[2].Trim().ToLower();
-							Console.WriteLine("[2]");
 							StringBuilder sb = new StringBuilder(stressed_text);
 							for (int i = 0; i < stressed_orig.Length; i++)
 							{
