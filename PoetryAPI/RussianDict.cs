@@ -122,6 +122,8 @@ namespace PoetryAPI
 								word.Lemm = lemm;
 								word.Frequency = freq;
 							}
+							Console.WriteLine("125");
+							Console.WriteLine("[" + parts[0] + "]");
 							switch (parts[1].Trim().Split(' ')[0])
 							{
 								case "гл":
