@@ -21,7 +21,7 @@ namespace PoetryAPI
         {
             Configuration = configuration;
 
-            Dict.LoadDictionaryFull();
+            //Dict.LoadDictionaryFast();
         }
 
         public IConfiguration Configuration { get; }

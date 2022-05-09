@@ -7,12 +7,14 @@
   <ItemGroup>
     <None Remove="dictionaryFast.txt" />
     <None Remove="dictionaryMedium.txt" />
+    <None Remove="dictionaryRare.txt" />
     <None Remove="dictionarySlow.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="dictionaryFast.txt" />
     <EmbeddedResource Include="dictionaryMedium.txt" />
+    <EmbeddedResource Include="dictionaryRare.txt" />
     <EmbeddedResource Include="dictionarySlow.txt" />
   </ItemGroup>
 

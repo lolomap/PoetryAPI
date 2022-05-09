@@ -18,7 +18,7 @@ namespace PoetryAPI.Controllers
         {
             try
             {
-                return Startup.Dict.Search(word).ToString();
+                return Startup.Dict.SearchAllFiles(word).ToString();
             }
             catch
             {
