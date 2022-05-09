@@ -86,11 +86,15 @@ namespace PoetryAPI
 						string line;
 						string lemm = "";
 						double freq = -1;
+						int start_offset = 0;
 						while ((line = sr.ReadLine()) != null)
 						{
 							Console.WriteLine("!!!!!!!!\n" + line + "\n!!!!!!!!!!!\n");
-							if (line.Contains("git"))
+							if (start_offset < 3)
+							{
+								start_offset++;
 								continue;
+							}
 
 							if (line == "" || line == " ")
 							{
