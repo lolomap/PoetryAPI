@@ -88,6 +88,7 @@ namespace PoetryAPI
 						double freq = -1;
 						while ((line = sr.ReadLine()) != null)
 						{
+							Console.WriteLine(line);
 							if (line.Contains("\ufeff"))
 								continue;
 
