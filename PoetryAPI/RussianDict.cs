@@ -89,13 +89,11 @@ namespace PoetryAPI
 						int start_offset = 0;
 						while ((line = sr.ReadLine()) != null)
 						{
-							Console.WriteLine("!!!!!!!!\n" + line + "\n!!!!!!!!!!!\n");
 							if (start_offset < 3)
 							{
 								start_offset++;
 								continue;
 							}
-
 							if (line == "" || line == " ")
 							{
 								lemm = "";
@@ -175,6 +173,9 @@ namespace PoetryAPI
 					}
 				}
 			}
+
+			Console.WriteLine(words.Count);
+			Console.WriteLine(words[0]);
 
 			return;
 		}
