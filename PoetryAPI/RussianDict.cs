@@ -99,7 +99,6 @@ namespace PoetryAPI
 							var parts = line.Split('|');
 
 							word.Text = parts[0].Trim();
-							Console.WriteLine("here");
 							if (lemm == "")
 							{
 								word.Lemm = word.Text;
@@ -139,9 +138,10 @@ namespace PoetryAPI
 									word.speechPart = SpeechPart.Unknown;
 									break;
 							}
-
+							Console.WriteLine("[1]");
 							string stressed_text = "";
 							string stressed_orig = parts[2].Trim().ToLower();
+							Console.WriteLine("[2]");
 							StringBuilder sb = new StringBuilder(stressed_text);
 							for (int i = 0; i < stressed_orig.Length; i++)
 							{
