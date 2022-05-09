@@ -99,7 +99,7 @@ namespace PoetryAPI
 							var parts = line.Split('|');
 
 							word.Text = parts[0].Trim();
-
+							Console.WriteLine("here");
 							if (lemm == "")
 							{
 								word.Lemm = word.Text;
