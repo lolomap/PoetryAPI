@@ -106,7 +106,7 @@ namespace PoetryAPI
 								word.Frequency = freq;
 							}
 
-							if (word.Text == w)
+							if (word.Text != w)
                             {
 								continue;
                             }
