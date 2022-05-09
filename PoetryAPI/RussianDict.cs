@@ -88,6 +88,9 @@ namespace PoetryAPI
 						double freq = -1;
 						while ((line = sr.ReadLine()) != null)
 						{
+							if (line.Contains("\ufeff"))
+								continue;
+
 							if (line == "" || line == " ")
 							{
 								lemm = "";
@@ -118,8 +121,6 @@ namespace PoetryAPI
 								word.Lemm = lemm;
 								word.Frequency = freq;
 							}
-							Console.WriteLine(line);
-							Console.WriteLine(parts.Length);
 							switch (parts[1].Trim().Split(' ')[0])
 							{
 								case "гл":
