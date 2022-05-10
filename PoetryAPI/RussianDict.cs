@@ -170,7 +170,14 @@ namespace PoetryAPI
 			
 			for (int i = 0; i < 4; i++)
             {
-				word = SearchFile(w, i);
+				if (i == 1)
+				{
+					word = Search(w);
+				}
+				else
+				{
+					word = SearchFile(w, i);
+				}
 				if (word != null)
 					return word;
             }
@@ -190,7 +197,7 @@ namespace PoetryAPI
 			LoadDictionary(0);
 		}
 
-		void LoadDictionary(int a)
+		public void LoadDictionary(int a)
         {
 			string dist;
 			switch(a)
