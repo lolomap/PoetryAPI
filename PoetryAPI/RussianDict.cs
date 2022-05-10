@@ -32,6 +32,14 @@ namespace PoetryAPI
 			Verb,
 			Noun,
 			Participle,
+			Pronoun,
+			Adverb,
+			Preposition,
+			Conjuction,
+			Particle,
+			Interjection,
+			Numerable,
+			Gerund
 		}
 
 		List<Word> words = new List<Word>();
@@ -125,7 +133,27 @@ namespace PoetryAPI
 								case "прл":
 									word.speechPart = SpeechPart.Adjective;
 									break;
-
+								case "дееп":
+									word.speechPart = SpeechPart.Gerund;
+									break;
+								case "нар":
+									word.speechPart = SpeechPart.Adverb;
+									break;
+								case "числ":
+									word.speechPart = SpeechPart.Numerable;
+									break;
+								case "предл":
+									word.speechPart = SpeechPart.Preposition;
+									break;
+								case "част":
+									word.speechPart = SpeechPart.Particle;
+									break;
+								case "союз":
+									word.speechPart = SpeechPart.Conjuction;
+									break;
+								case "межд":
+									word.speechPart = SpeechPart.Interjection;
+									break;
 								default:
 									word.speechPart = SpeechPart.Unknown;
 									break;
