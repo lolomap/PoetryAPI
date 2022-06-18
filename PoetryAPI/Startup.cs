@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +18,12 @@ namespace PoetryAPI
     public class Startup
     {
         public static RussianDict Dict = new RussianDict();
+        public static SpellChecker Spell = new SpellChecker();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
 
+            Spell.LoadSpellChecker();
             Dict.LoadDictionary(1);
         }
 
@@ -52,6 +55,11 @@ namespace PoetryAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseEndpoints(endpoints =>
             {

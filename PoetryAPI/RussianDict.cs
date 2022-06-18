@@ -74,9 +74,9 @@ namespace PoetryAPI
 			var assembly = IntrospectionExtensions.GetTypeInfo(typeof(RussianDict)).Assembly;
 			using (Stream stream = assembly.GetManifestResourceStream(dist))
 			{
-				using (BufferedStream bs = new BufferedStream(stream))
+				using (BufferedStream bs = new(stream))
 				{
-					using (StreamReader sr = new StreamReader(bs))
+					using (StreamReader sr = new(bs))
 					{
 						string line;
 						string lemm = "";
@@ -119,46 +119,22 @@ namespace PoetryAPI
 								continue;
                             }
 
-							switch (parts[1].Trim().Split(' ')[0])
-							{
-								case "гл":
-									word.speechPart = SpeechPart.Verb;
-									break;
-								case "сущ":
-									word.speechPart = SpeechPart.Noun;
-									break;
-								case "прч":
-									word.speechPart = SpeechPart.Participle;
-									break;
-								case "прл":
-									word.speechPart = SpeechPart.Adjective;
-									break;
-								case "дееп":
-									word.speechPart = SpeechPart.Gerund;
-									break;
-								case "нар":
-									word.speechPart = SpeechPart.Adverb;
-									break;
-								case "числ":
-									word.speechPart = SpeechPart.Numerable;
-									break;
-								case "предл":
-									word.speechPart = SpeechPart.Preposition;
-									break;
-								case "част":
-									word.speechPart = SpeechPart.Particle;
-									break;
-								case "союз":
-									word.speechPart = SpeechPart.Conjuction;
-									break;
-								case "межд":
-									word.speechPart = SpeechPart.Interjection;
-									break;
-								default:
-									word.speechPart = SpeechPart.Unknown;
-									break;
-							}
-							string stressed_text = "";
+                            word.speechPart = parts[1].Trim().Split(' ')[0] switch
+                            {
+                                "гл" => SpeechPart.Verb,
+                                "сущ" => SpeechPart.Noun,
+                                "прч" => SpeechPart.Participle,
+                                "прл" => SpeechPart.Adjective,
+                                "дееп" => SpeechPart.Gerund,
+                                "нар" => SpeechPart.Adverb,
+                                "числ" => SpeechPart.Numerable,
+                                "предл" => SpeechPart.Preposition,
+                                "част" => SpeechPart.Particle,
+                                "союз" => SpeechPart.Conjuction,
+                                "межд" => SpeechPart.Interjection,
+                                _ => SpeechPart.Unknown,
+                            };
+                            string stressed_text = "";
 							string stressed_orig = parts[2].Trim().ToLower();
 							StringBuilder sb = new StringBuilder(stressed_text);
 							for (int i = 0; i < stressed_orig.Length; i++)
@@ -227,27 +203,15 @@ namespace PoetryAPI
 
 		public void LoadDictionary(int a)
         {
-			string dist;
-			switch(a)
+            string dist = a switch
             {
-				case 0:
-					dist = "PoetryAPI.dictionaryFast.txt";
-					break;
-				case 1:
-					dist = "PoetryAPI.dictionaryMedium.txt";
-					break;
-				case 2:
-					dist = "PoetryAPI.dictionarySlow.txt";
-					break;
-				case 3:
-					dist = "PoetryAPI.dictionaryRare.txt";
-					break;
-				default:
-					dist = "PoetryAPI.dictionaryFast.txt";
-					break;
-			}
-
-			var assembly = IntrospectionExtensions.GetTypeInfo(typeof(RussianDict)).Assembly;
+                0 => "PoetryAPI.dictionaryFast.txt",
+                1 => "PoetryAPI.dictionaryMedium.txt",
+                2 => "PoetryAPI.dictionarySlow.txt",
+                3 => "PoetryAPI.dictionaryRare.txt",
+                _ => "PoetryAPI.dictionaryFast.txt",
+            };
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(RussianDict)).Assembly;
 			using (Stream stream = assembly.GetManifestResourceStream(dist))
 			{
 				using (BufferedStream bs = new BufferedStream(stream))
@@ -289,26 +253,22 @@ namespace PoetryAPI
 								word.Lemm = lemm;
 								word.Frequency = freq;
 							}
-							switch (parts[1].Trim().Split(' ')[0])
-							{
-								case "гл":
-									word.speechPart = SpeechPart.Verb;
-									break;
-								case "сущ":
-									word.speechPart = SpeechPart.Noun;
-									break;
-								case "прч":
-									word.speechPart = SpeechPart.Participle;
-									break;
-								case "прл":
-									word.speechPart = SpeechPart.Adjective;
-									break;
-
-								default:
-									word.speechPart = SpeechPart.Unknown;
-									break;
-							}
-							string stressed_text = "";
+                            word.speechPart = parts[1].Trim().Split(' ')[0] switch
+                            {
+								"гл" => SpeechPart.Verb,
+								"сущ" => SpeechPart.Noun,
+								"прч" => SpeechPart.Participle,
+								"прл" => SpeechPart.Adjective,
+								"дееп" => SpeechPart.Gerund,
+								"нар" => SpeechPart.Adverb,
+								"числ" => SpeechPart.Numerable,
+								"предл" => SpeechPart.Preposition,
+								"част" => SpeechPart.Particle,
+								"союз" => SpeechPart.Conjuction,
+								"межд" => SpeechPart.Interjection,
+								_ => SpeechPart.Unknown,
+							};
+                            string stressed_text = "";
 							string stressed_orig = parts[2].Trim().ToLower();
 							StringBuilder sb = new StringBuilder(stressed_text);
 							for (int i = 0; i < stressed_orig.Length; i++)
