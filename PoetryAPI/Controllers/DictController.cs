@@ -18,11 +18,18 @@ namespace PoetryAPI.Controllers
         {
             try
             {
-                return Startup.Dict.SearchAllFiles(word).ToString();
+                //return Startup.Dict.SearchAllFiles(word).ToString();
+                //return Startup.Dict.Search(word).ToString();
+
+                Word res = Startup.Dict.SearchDB(word);
+                if (res != null)
+                    return res.ToString();
+                else
+                    return "None";
             }
-            catch
+            catch(Exception ex)
             {
-                return "None";
+                return "Server error: " + ex.ToString();
             }
         }
     }

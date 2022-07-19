@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -49,7 +50,51 @@ namespace PoetryAPI
 			return words.Find(i => string.Equals(i.Text, word, StringComparison.CurrentCultureIgnoreCase));
 		}
 
-		public Word SearchFile(string w, int a)
+		public Word SearchDB(string word)
+        {
+			Word result = null;
+
+			if (Database.DB.IsConnect())
+			{
+				//suppose col0 and col1 are defined as VARCHAR in the DB
+				string query = "SELECT * FROM WordsDictionary WHERE `Text` = '" + word + "'";
+				using (MySqlCommand cmd = new MySqlCommand(query, Database.DB.Connection))
+				{
+					using (MySqlDataReader reader = cmd.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							result = new Word();
+							//for (int i = 0; i < 8; i++)
+							//{
+							//	object col = reader.GetValue(i);
+							//	System.Diagnostics.Debug.WriteLine(col);
+							//}
+
+							if (!reader.HasRows)
+								return null;
+
+							if (!reader.IsDBNull(1))
+								result.Text = reader.GetString(1);
+							if (!reader.IsDBNull(2))
+								result.Lemm = reader.GetString(2);
+							if (!reader.IsDBNull(3))
+								result.Frequency = reader.GetFloat(3);
+							if (!reader.IsDBNull(4))
+								result.speechPart = (SpeechPart)reader.GetInt32(4);
+							if (!reader.IsDBNull(6))
+								result.StressPosition = reader.GetInt32(6);
+						}
+						return result;
+					}
+				}
+			}
+
+
+			return null;
+        }
+
+		private Word SearchFile(string w, int a)
         {
 			string dist;
 			switch (a)
@@ -168,7 +213,7 @@ namespace PoetryAPI
 			return null;
 		}
 
-		public Word SearchAllFiles(string w)
+		private Word SearchAllFiles(string w)
         {
 			Word word;
 			
@@ -188,7 +233,7 @@ namespace PoetryAPI
 			return null;
         }
 
-		public void LoadDictionaryFull()
+		private void LoadDictionaryFull()
         {
 			LoadDictionary(0);
 			LoadDictionary(1);
@@ -196,12 +241,12 @@ namespace PoetryAPI
 			LoadDictionary(3);
         }
 
-		public void LoadDictionaryFast()
+		private void LoadDictionaryFast()
 		{
 			LoadDictionary(0);
 		}
 
-		public void LoadDictionary(int a)
+		private void LoadDictionary(int a)
         {
             string dist = a switch
             {
@@ -305,5 +350,4 @@ namespace PoetryAPI
 			return;
 		}
 	}
-
 }
