@@ -40,8 +40,13 @@ namespace PoetryAPI
 					if (string.IsNullOrEmpty(DatabaseName))
 						return false;
 
+#if DEBUG
+					string connstring = string.Format("Server={0}; database={1}; UID={2}; password={3};",
+						Server, DatabaseName, Username, Password);
+#else
 					string connstring = string.Format("Server={0}; database={1}; UID={2}; password={3}; protocol=Unix",
 						Server, DatabaseName, Username, Password);
+#endif
 					Connection = new MySqlConnection(connstring);
 					Connection.Open();
 					return true;

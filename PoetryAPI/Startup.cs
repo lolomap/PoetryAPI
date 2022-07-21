@@ -24,6 +24,15 @@ namespace PoetryAPI
 		{
 			Configuration = configuration;
 
+#if DEBUG
+			Database.DB = new DBConnection()
+			{
+				Server = "localhost",
+				DatabaseName = "poetrydb",
+				Username = "root",
+				Password = "cool_0789"
+			};
+#else
 			Database.DB = new DBConnection()
 			{
 				Server = "/var/run/mysqld/mysqld.sock",
@@ -31,10 +40,11 @@ namespace PoetryAPI
 				Username = "poetry",
 				Password = "3WskCJ_0789"
 			};
+#endif
 
 			TestSql();
 
-			Spell.LoadSpellChecker();
+			//Spell.LoadSpellChecker();
 			//Dict.LoadDictionary(1);
 		}
 		private void TestSql()
