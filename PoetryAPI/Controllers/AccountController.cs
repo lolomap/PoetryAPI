@@ -161,7 +161,7 @@ namespace PoetryAPI.Controllers
 
 		public static bool CreateUser(string username, string password)
         {
-            try
+            //try
             {
 				string today = DateTime.Today.Year.ToString() +
 					(DateTime.Today.Month.ToString().Length == 1 ? "0" + DateTime.Today.Month.ToString() : DateTime.Today.Month.ToString()) +
@@ -176,21 +176,10 @@ namespace PoetryAPI.Controllers
 				{
 					//suppose col0 and col1 are defined as VARCHAR in the DB
 					
-					string query = $"INSERT Users VALUES ('{username}', '{password}', '{username}', 0, 0, '{today}')";
+					string query = $"INSERT Users (Username, Password, Name, TotalScore, GamesCount, Created, Achievements) VALUES ('{username}', '{password}', '{username}', 0, 0, '{today}', 0)";
 					using (MySqlCommand cmd = new MySqlCommand(query, Database.DB.Connection))
 					{
-						using (MySqlDataReader reader = cmd.ExecuteReader())
-						{
-							while (reader.Read())
-							{
-
-								//if (!reader.HasRows)
-								//	return "{\"success\": \"false\"}";
-
-								//if (!reader.IsDBNull(2))
-								//	password_check = reader.GetString(2);
-							}
-						}
+						cmd.ExecuteNonQuery();
 					}
 				}
 				else
@@ -200,7 +189,7 @@ namespace PoetryAPI.Controllers
 
 				return true;
             }
-			catch
+			//catch
             {
 				return false;
             }
