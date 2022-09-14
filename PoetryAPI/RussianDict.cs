@@ -89,6 +89,7 @@ namespace PoetryAPI
 					}
 				}
 			}
+			else throw new Exception("DB is not connected");
 
 
 			return null;

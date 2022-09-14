@@ -35,7 +35,7 @@ namespace PoetryAPI
 		{
 			try
 			{
-				if (Connection == null)
+				if (Connection == null || Connection.State != System.Data.ConnectionState.Open)
 				{
 					if (string.IsNullOrEmpty(DatabaseName))
 						return false;
@@ -51,12 +51,6 @@ namespace PoetryAPI
 					Connection.Open();
 					return true;
 				}
-
-				if (Connection.State == System.Data.ConnectionState.Closed)
-					return false;
-
-
-
 
 				return true;
 			}
