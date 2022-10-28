@@ -22,7 +22,14 @@ namespace PoetryAPI.Controllers
         {
 			return UserManager.CreateUser(user.Username, user.Password);
         }
-    }
+
+		[HttpPost]
+		[Route("api/SaveScore")]
+		public bool SaveScore(SaveScoreStruct user)
+		{
+			return UserManager.saveScore(user.Username, user.Password, user.Score);
+		}
+	}
 
     public class User
     {
@@ -30,8 +37,42 @@ namespace PoetryAPI.Controllers
         public string Password { get; set; }
     }
 
-    public class UserManager
+	public class SaveScoreStruct
+	{
+		public string Username { get; set; }
+		public string Password { get; set; }
+		public int Score { get; set; }
+	}
+
+	public class UserManager
     {
+		public static bool saveScore(string username, string password,  int score)
+        {
+			string user = GetUser(username, password);
+			if (user == "{\"success\": \"false\"}")
+            {
+				return false;
+            }
+
+			if (Database.DB.IsConnect())
+			{
+				//suppose col0 and col1 are defined as VARCHAR in the DB
+				string query = "UPDATE Users SET totalscore = " + score.ToString() + " WHERE username = '" + username + "'";
+				using (MySqlCommand cmd = new MySqlCommand(query, Database.DB.Connection))
+				{
+					cmd.ExecuteNonQuery();
+				}
+				query = "UPDATE Users SET gamescount = gamescount + 1 WHERE username = '" + username + "'";
+				using (MySqlCommand cmd = new MySqlCommand(query, Database.DB.Connection))
+				{
+					cmd.ExecuteNonQuery();
+				}
+			}
+			else throw new Exception("DB is not connected");
+
+			return true;
+		}
+
         public static string GetUser(string username, string password)
         {
 			string name = "", score = "", games = "", created = "", achievements = "", password_check = "";
@@ -161,7 +202,7 @@ namespace PoetryAPI.Controllers
 
 		public static bool CreateUser(string username, string password)
         {
-            //try
+            try
             {
 				string today = DateTime.Today.Year.ToString() +
 					(DateTime.Today.Month.ToString().Length == 1 ? "0" + DateTime.Today.Month.ToString() : DateTime.Today.Month.ToString()) +
@@ -189,7 +230,7 @@ namespace PoetryAPI.Controllers
 
 				return true;
             }
-			//catch
+			catch
             {
 				return false;
             }
